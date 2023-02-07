@@ -20,7 +20,7 @@ public class MenuActivity extends AppCompatActivity {
     Button buttonStart;
     Button buttonDatabase;
 
-    ArrayList<String> names = new ArrayList<>();
+    ArrayList<QuizEntry> names = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,9 +30,9 @@ public class MenuActivity extends AppCompatActivity {
         buttonHard = (Button) findViewById(R.id.button_hard);
         buttonStart = (Button) findViewById(R.id.button_start);
         buttonDatabase = (Button) findViewById(R.id.button_db);
-        this.names.add("Iselin");
-        this.names.add("Iver");
-        this.names.add("Ty");
+        this.names.add(new QuizEntry("Iselin", R.drawable.iver));
+        this.names.add(new QuizEntry("Iver", R.drawable.iver));
+        this.names.add(new QuizEntry("Ty", R.drawable.ty));
 
 
 
@@ -51,7 +51,7 @@ public class MenuActivity extends AppCompatActivity {
         Intent intent = getIntent();
         Bundle extras = intent.getExtras();
         if (extras != null) {
-            this.names = getIntent().getStringArrayListExtra("names");
+            this.names = (ArrayList<QuizEntry>) getIntent().getSerializableExtra("names");
         }
         //this.names = getIntent().getStringArrayListExtra("names");
     }
@@ -59,7 +59,7 @@ public class MenuActivity extends AppCompatActivity {
     private void act(String type) {
         switch (type) {
             case "db":
-                Log.d("aaa", names.toString());
+                Log.d("SADFADSF","start");
                 Intent intent = new Intent(this, DatabaseActivity.class).putExtra("names", names);
                 startActivity(intent);
 

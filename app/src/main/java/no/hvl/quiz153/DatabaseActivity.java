@@ -7,6 +7,7 @@ import com.google.android.material.snackbar.Snackbar;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ListView;
@@ -22,7 +23,7 @@ import java.util.Collections;
 
 
 public class DatabaseActivity extends AppCompatActivity {
-    ArrayList<String> names = new ArrayList<>();
+    ArrayList<QuizEntry> names = new ArrayList<>();
 
     ListView listView;
 
@@ -37,7 +38,10 @@ public class DatabaseActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_database);
         listView = (ListView) findViewById(R.id.my_list);
-        this.names = getIntent().getStringArrayListExtra("names");
+        Log.d("SADFADSF","before name");
+        this.names = (ArrayList<QuizEntry>) getIntent().getSerializableExtra("names");
+        Log.d("SADFADSF","after name");
+
         CustomAdaptr customAdaptr = new CustomAdaptr(getApplicationContext(),names);
         listView.setAdapter(customAdaptr);
         button_sort = (Button) findViewById(R.id.button_sort);
@@ -46,7 +50,7 @@ public class DatabaseActivity extends AppCompatActivity {
         button_sort.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Collections.sort(names);
+                //Collections.sort(names);
                 listView.setAdapter(new CustomAdaptr(getApplicationContext(),names));
             }
         });
