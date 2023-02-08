@@ -1,10 +1,13 @@
 package no.hvl.quiz153;
 
 import android.graphics.drawable.Drawable;
+import android.os.Parcel;
+import android.os.Parcelable;
 
 import androidx.annotation.DrawableRes;
+import androidx.annotation.NonNull;
 
-public class QuizEntry {
+public class QuizEntry implements Parcelable{
     private String text;
     
     @DrawableRes
@@ -14,6 +17,23 @@ public class QuizEntry {
         this.text = text;
         this.img = img;
     }
+
+    protected QuizEntry(Parcel in) {
+        text = in.readString();
+        img = in.readInt();
+    }
+
+    public static final Creator<QuizEntry> CREATOR = new Creator<QuizEntry>() {
+        @Override
+        public QuizEntry createFromParcel(Parcel in) {
+            return new QuizEntry(in);
+        }
+
+        @Override
+        public QuizEntry[] newArray(int size) {
+            return new QuizEntry[size];
+        }
+    };
 
     public String getText() {
         return text;
@@ -37,5 +57,17 @@ public class QuizEntry {
 
     public void setImg(int img) {
         this.img = img;
+    }
+
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(@NonNull Parcel dest, int flags) {
+        dest.writeString(text);
+        dest.writeInt(img);
     }
 }
