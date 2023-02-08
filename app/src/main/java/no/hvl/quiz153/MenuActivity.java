@@ -30,7 +30,6 @@ public class MenuActivity extends AppCompatActivity {
         buttonHard = (Button) findViewById(R.id.button_hard);
         buttonStart = (Button) findViewById(R.id.button_start);
         buttonDatabase = (Button) findViewById(R.id.button_db);
-        this.names.add(new QuizEntry("Iselin", R.drawable.iver));
         this.names.add(new QuizEntry("Iver", R.drawable.iver));
         this.names.add(new QuizEntry("Ty", R.drawable.ty));
 
@@ -60,7 +59,7 @@ public class MenuActivity extends AppCompatActivity {
         switch (type) {
             case "db":
                 Log.d("SADFADSF","start");
-                Intent intent = new Intent(this, DatabaseActivity.class).putExtra("names", names);
+                Intent intent = new Intent(this, DatabaseActivity.class).putExtra("names",names);
                 startActivity(intent);
 
         }
