@@ -52,9 +52,12 @@ public class CustomAdaptr extends BaseAdapter {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                entryList.remove(a);
-                notifyDataSetChanged();
+                if (getCount() > 3 ) {
+                    entryList.remove(a);
+                    notifyDataSetChanged();
+                }
             }
+
         });
         imageView.setImageResource(entryList.get(position).getImg());
         return convertView;
