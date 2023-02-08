@@ -38,9 +38,8 @@ public class DatabaseActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_database);
         listView = (ListView) findViewById(R.id.my_list);
-        Log.d("SADFADSF","before name");
-        this.names = (ArrayList<QuizEntry>) getIntent().getSerializableExtra("names");
-        Log.d("SADFADSF","after name");
+
+        names = (ArrayList<QuizEntry>) getIntent().getSerializableExtra("names");
 
         CustomAdaptr customAdaptr = new CustomAdaptr(getApplicationContext(),names);
         listView.setAdapter(customAdaptr);
