@@ -32,6 +32,7 @@ public class MenuActivity extends AppCompatActivity {
         buttonDatabase = (Button) findViewById(R.id.button_db);
         this.names.add(new QuizEntry("Iver", R.drawable.iver));
         this.names.add(new QuizEntry("Ty", R.drawable.ty));
+        this.names.add(new QuizEntry("ISELIN", R.drawable.iselin));
 
 
 
@@ -52,7 +53,6 @@ public class MenuActivity extends AppCompatActivity {
         if (extras != null) {
             this.names = (ArrayList<QuizEntry>) getIntent().getSerializableExtra("names");
         }
-        //this.names = getIntent().getStringArrayListExtra("names");
     }
 
     private void act(String type) {
