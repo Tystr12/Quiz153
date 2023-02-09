@@ -25,13 +25,15 @@
             android:id="@+id/button_sort"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="SORT"
+            android:text="Sort"
+            android:textAllCaps="false"
             />
         <Button
             android:id="@+id/button_addentry"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="add entry"
+            android:text="Add entry"
+            android:textAllCaps="false"
             />
 
 
@@ -39,10 +41,13 @@
 
     <ListView
         android:id="@+id/my_list"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="184dp"
-        android:layout_marginBottom="7dp"
+        android:divider="@color/black"
+        android:dividerHeight="1dp"
+        android:footerDividersEnabled="false"
+        android:headerDividersEnabled="false"
+        android:layout_marginBottom="20dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
