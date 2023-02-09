@@ -30,7 +30,7 @@ public class DatabaseActivity extends AppCompatActivity {
     Button button_sort;
     Button button_back;
 
-    //Button button_newentry;
+    Button button_newentry;
 
 
     @Override
@@ -45,7 +45,7 @@ public class DatabaseActivity extends AppCompatActivity {
         listView.setAdapter(customAdaptr);
         button_sort = (Button) findViewById(R.id.button_sort);
         button_back = (Button) findViewById(R.id.button_back);
-        //button_newentry = (Button) findViewById(R.id.button_newentry);
+        button_newentry = (Button) findViewById(R.id.button_addentry);
         button_sort.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -59,20 +59,31 @@ public class DatabaseActivity extends AppCompatActivity {
                 act("menu");
             }
         });
+        button_newentry.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                act("newentry");
+            }
+        });
 
 
 
 
     }
+
     private void act(String type) {
+        Intent intent = new Intent();
         switch (type) {
             case "menu":
-                Intent intent = new Intent(this, MenuActivity.class).putExtra("names", names);
-                startActivity(intent);
+                intent.setClass(this, MenuActivity.class);
+                break;
 
             case "newentry":
-            //    Intent intent = new Intent(this, )
+                intent.setClass(this, NewEntryActivity.class);
+                break;
         }
+        intent.putExtra("names", names);
+        startActivity(intent);
 
 
     }
