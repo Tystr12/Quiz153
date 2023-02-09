@@ -33,6 +33,7 @@ public class DatabaseActivity extends AppCompatActivity {
     Button button_newentry;
 
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,10 +47,11 @@ public class DatabaseActivity extends AppCompatActivity {
         button_sort = (Button) findViewById(R.id.button_sort);
         button_back = (Button) findViewById(R.id.button_back);
         button_newentry = (Button) findViewById(R.id.button_addentry);
+        Collections.sort(names);
         button_sort.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //Collections.sort(names);
+                Collections.reverse(names);
                 listView.setAdapter(new CustomAdaptr(getApplicationContext(),names));
             }
         });

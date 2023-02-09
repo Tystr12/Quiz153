@@ -7,7 +7,7 @@ import android.os.Parcelable;
 import androidx.annotation.DrawableRes;
 import androidx.annotation.NonNull;
 
-public class QuizEntry implements Parcelable{
+public class QuizEntry implements Parcelable, Comparable<QuizEntry>{
     private String text;
     
     @DrawableRes
@@ -69,5 +69,10 @@ public class QuizEntry implements Parcelable{
     public void writeToParcel(@NonNull Parcel dest, int flags) {
         dest.writeString(text);
         dest.writeInt(img);
+    }
+
+    @Override
+    public int compareTo(QuizEntry o) {
+        return this.text.toLowerCase().compareTo(o.getText().toLowerCase());
     }
 }

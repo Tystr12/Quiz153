@@ -115,7 +115,6 @@ public class QuizActivity extends AppCompatActivity {
     private void checkAnswer(String text) {
 
         if (text.equals(curr_answer.getText())) {
-            Log.d("DEBUUUUUUUUUUUUUUG", text);
             score++;
         }
         total++;
