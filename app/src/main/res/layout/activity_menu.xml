@@ -4,18 +4,20 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
-
+    tools:context=".MenuActivity">
     <Button
         android:id="@+id/button_easy"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="298dp"
-        android:layout_marginEnd="23dp"
-        android:layout_marginBottom="83dp"
+        android:layout_marginLeft="35dp"
+        android:layout_marginBottom="100dp"
         android:text="Easy"
+        android:textColor="@color/white"
+        android:background="@color/cardview_dark_background"
+        android:textAllCaps="false"
         app:layout_constraintBottom_toTopOf="@+id/button_start"
-        app:layout_constraintEnd_toStartOf="@+id/button_hard"
+        app:layout_constraintRight_toRightOf="@+id/button_hard"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -23,19 +25,26 @@
         android:id="@+id/button_hard"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="298dp"
-        android:layout_marginEnd="17dp"
+        app:layout_constraintBaseline_toBaselineOf="@+id/button_easy"
         android:text="Hard"
+        android:textColor="@color/white"
+        android:textAllCaps="false"
+        android:background="@color/cardview_dark_background"
+        android:layout_marginLeft="130dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/button_easy"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"/>
 
     <Button
         android:id="@+id/button_start"
-        android:layout_width="207dp"
-        android:layout_height="54dp"
-        android:layout_marginBottom="78dp"
+        android:layout_width="350dp"
+        android:layout_height="80dp"
+        android:layout_marginBottom="50dp"
         android:text="Start"
+        android:textColor="@color/white"
+        android:textAllCaps="false"
+        android:textSize="20sp"
+        android:background="@color/cardview_dark_background"
         app:layout_constraintBottom_toTopOf="@+id/button_db"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -43,10 +52,14 @@
 
     <Button
         android:id="@+id/button_db"
-        android:layout_width="210dp"
-        android:layout_height="48dp"
+        android:layout_width="350dp"
+        android:layout_height="80dp"
         android:layout_marginBottom="132dp"
-        android:text="database"
+        android:text="Database"
+        android:textAllCaps="false"
+        android:textSize="20sp"
+        android:textColor="@color/white"
+        android:background="@color/cardview_dark_background"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
