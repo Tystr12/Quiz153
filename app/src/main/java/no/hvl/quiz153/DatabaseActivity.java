@@ -20,7 +20,7 @@ import androidx.navigation.ui.NavigationUI;
 import java.util.ArrayList;
 import java.util.Collections;
 
-
+//This class provides a visual of all elements in the database
 
 public class DatabaseActivity extends AppCompatActivity {
     ArrayList<QuizEntry> names = new ArrayList<>();
@@ -38,6 +38,7 @@ public class DatabaseActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_database);
+        //Creates the view dynamic
         listView = (ListView) findViewById(R.id.my_list);
 
         names = (ArrayList<QuizEntry>) getIntent().getSerializableExtra("names");
@@ -55,12 +56,14 @@ public class DatabaseActivity extends AppCompatActivity {
                 listView.setAdapter(new CustomAdaptr(getApplicationContext(),names));
             }
         });
+
         button_back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 act("menu");
             }
         });
+
         button_newentry.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

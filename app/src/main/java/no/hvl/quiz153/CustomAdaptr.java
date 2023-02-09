@@ -12,7 +12,9 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.List;
 
+// provides a ListView over all the elements in the database
 public class CustomAdaptr extends BaseAdapter {
+
     Context context;
     ArrayList<QuizEntry> entryList;
     LayoutInflater inflater;

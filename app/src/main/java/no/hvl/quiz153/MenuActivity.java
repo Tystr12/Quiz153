@@ -14,7 +14,11 @@ import android.widget.Button;
 
 import java.util.ArrayList;
 
+
+//
+
 public class MenuActivity extends AppCompatActivity {
+
     Button buttonEasy;
     Button buttonHard;
     Button buttonStart;
@@ -26,6 +30,7 @@ public class MenuActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu);
+        //The buttons are implemented
         buttonEasy = (Button) findViewById(R.id.button_easy);
         buttonHard = (Button) findViewById(R.id.button_hard);
         buttonStart = (Button) findViewById(R.id.button_start);
@@ -38,7 +43,7 @@ public class MenuActivity extends AppCompatActivity {
 
 
 
-
+        //Redirects the user to the correct page
         buttonDatabase.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

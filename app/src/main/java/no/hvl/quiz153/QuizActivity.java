@@ -15,6 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+//This class shows the images, and updates the score if the user guess correctly
 public class QuizActivity extends AppCompatActivity {
 
 
