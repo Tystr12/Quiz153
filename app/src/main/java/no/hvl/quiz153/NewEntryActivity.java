@@ -24,6 +24,7 @@ public class NewEntryActivity extends AppCompatActivity {
     Button addPictureButton;
     EditText text;
     Button confirmButton;
+    int curr_image;
 
 
     @Override
@@ -45,7 +46,8 @@ public class NewEntryActivity extends AppCompatActivity {
         addPictureButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                imageView.setImageResource(R.drawable.ty);
+                addImg(R.drawable.ty);
+
             }
         });
         confirmButton.setOnClickListener(new View.OnClickListener() {
@@ -66,11 +68,17 @@ public class NewEntryActivity extends AppCompatActivity {
         }
 
     }
+
+    private void addImg(int i) {
+        imageView.setImageResource(i);
+        curr_image = i;
+    }
     private int acquirePicture() {
 
-        Integer p = (Integer) imageView.getTag();
+        int out = curr_image;
+        curr_image = 0;
         imageView.setImageResource(0);
-        return (int) p;
+        return out;
     }
     private String acquireText() {
         String out = String.valueOf(text.getText());
