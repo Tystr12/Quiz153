@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 // provides a ListView over all the elements in the database
+// the class ensures that the correct text appears in the correct element
 public class CustomAdaptr extends BaseAdapter {
 
     Context context;

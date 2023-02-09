@@ -15,7 +15,7 @@ import android.widget.Button;
 import java.util.ArrayList;
 
 
-//
+//This class provides a visual of the main page of the application with the choices the user can make
 
 public class MenuActivity extends AppCompatActivity {
 
