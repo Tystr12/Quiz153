@@ -33,6 +33,9 @@ public class MenuActivity extends AppCompatActivity {
         this.names.add(new QuizEntry("Iver", R.drawable.iver));
         this.names.add(new QuizEntry("Ty", R.drawable.ty));
         this.names.add(new QuizEntry("ISELIN", R.drawable.iselin));
+        this.names.add(new QuizEntry("abab", R.drawable.ic_launcher_background));
+        this.names.add(new QuizEntry("PAPPA",R.drawable.ic_launcher_foreground));
+
 
 
 
