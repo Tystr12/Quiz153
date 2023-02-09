@@ -43,13 +43,6 @@ public class MenuActivity extends AppCompatActivity {
             }
         });
 
-        buttonStart.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                act("quiz");
-            }
-        });
-
     }
 
     @Override
@@ -63,19 +56,13 @@ public class MenuActivity extends AppCompatActivity {
     }
 
     private void act(String type) {
-        Intent intent = new Intent();
         switch (type) {
             case "db":
-                intent.setClass(this, DatabaseActivity.class);
-
-                break;
-            case "quiz":
-                intent.setClass(this, QuizActivity.class);
-
+                Log.d("SADFADSF","start");
+                Intent intent = new Intent(this, DatabaseActivity.class).putExtra("names",names);
+                startActivity(intent);
 
         }
-        intent.putExtra("names",names);
-        startActivity(intent);
 
 
     }
