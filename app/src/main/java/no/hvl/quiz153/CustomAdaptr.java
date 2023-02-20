@@ -1,5 +1,6 @@
 package no.hvl.quiz153;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -43,6 +44,7 @@ public class CustomAdaptr extends BaseAdapter {
         return 0;
     }
 
+    @SuppressLint("ViewHolder")
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         convertView = inflater.inflate(R.layout.activity_custom_list_view,null);
@@ -51,6 +53,7 @@ public class CustomAdaptr extends BaseAdapter {
         Button button = (Button) convertView.findViewById(R.id.button_delete);
         final QuizEntry a = getItem(position);
         textView.setText(entryList.get(position).getText());
+        imageView.setImageResource(entryList.get(position).getImg());
 
         button.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -62,7 +65,6 @@ public class CustomAdaptr extends BaseAdapter {
             }
 
         });
-        imageView.setImageResource(entryList.get(position).getImg());
         return convertView;
     }
 }

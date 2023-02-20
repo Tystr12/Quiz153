@@ -10,7 +10,6 @@ import androidx.annotation.NonNull;
 public class QuizEntry implements Parcelable, Comparable<QuizEntry>{
     private String text;
     
-    @DrawableRes
     private int img;
 
     public QuizEntry(String text, int img) {

@@ -41,11 +41,6 @@ public class QuizActivity extends AppCompatActivity {
         button_list.add(findViewById(R.id.button_answer1));
         button_list.add(findViewById(R.id.button_answer2));
         button_list.add(findViewById(R.id.button_answer3));
-        Log.d("ASDFASDFASDFASDFASDFASDFASDFDSAFASDFSADF", button_list.toString());
-
-
-        this.names = (ArrayList<QuizEntry>) getIntent().getSerializableExtra("names");
-
 
 
         button_list.forEach((x) -> x.setOnClickListener(new View.OnClickListener() {
@@ -66,6 +61,7 @@ public class QuizActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
+        this.names = (ArrayList<QuizEntry>) getIntent().getSerializableExtra("names");
         total = 0;
         score = 0;
         setAnswers();
@@ -89,13 +85,13 @@ public class QuizActivity extends AppCompatActivity {
     public ArrayList<QuizEntry> getRandomSublist(ArrayList<QuizEntry> list) {
         ArrayList<QuizEntry> subList = new ArrayList<>();
         Random random = new Random();
-        int size = Math.min(3, list.size());
+        int size = list.size();
         for (int i = 0; i < size; i++) {
             int randomIndex = random.nextInt(list.size());
             subList.add(list.get(randomIndex));
             list.remove(randomIndex);
         }
-        this.curr_answer = subList.remove(0);
+        curr_answer = subList.remove(0);
         return subList;
     }
 
@@ -108,20 +104,15 @@ public class QuizActivity extends AppCompatActivity {
         button_copy.remove(0).setText(wrongs.get(0).getText());
         button_copy.remove(0).setText(wrongs.get(1).getText());
         imageView.setImageResource(curr_answer.getImg());
-
-
-
     }
 
     private void checkAnswer(String text) {
-
         if (text.equals(curr_answer.getText())) {
             score++;
         }
         total++;
-        setScore();setAnswers();
-
-
+        setScore();
+        setAnswers();
     }
 
     @SuppressLint("SetTextI18n")

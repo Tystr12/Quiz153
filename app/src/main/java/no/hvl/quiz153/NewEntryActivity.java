@@ -42,7 +42,6 @@ public class NewEntryActivity extends AppCompatActivity {
                 public void onActivityResult(ActivityResult result) {
                     if (result.getResultCode() == RESULT_OK) {
                         Intent data = result.getData();
-                        Log.d("@@@@@@@@@@", result.toString());
                         Cursor cursor = getContentResolver().query(data.getData(), new String[]{MediaStore.Images.Media.DATA},null, null, null);
                         cursor.moveToFirst();
                         imageView.setImageURI(data.getData());

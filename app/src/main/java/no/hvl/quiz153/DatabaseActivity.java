@@ -40,15 +40,9 @@ public class DatabaseActivity extends AppCompatActivity {
         setContentView(R.layout.activity_database);
         //Creates the view dynamic
         listView = (ListView) findViewById(R.id.my_list);
-
-        names = (ArrayList<QuizEntry>) getIntent().getSerializableExtra("names");
-
-        CustomAdaptr customAdaptr = new CustomAdaptr(getApplicationContext(),names);
-        listView.setAdapter(customAdaptr);
         button_sort = (Button) findViewById(R.id.button_sort);
         button_back = (Button) findViewById(R.id.button_back);
         button_newentry = (Button) findViewById(R.id.button_addentry);
-        Collections.sort(names);
         button_sort.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -56,6 +50,7 @@ public class DatabaseActivity extends AppCompatActivity {
                 listView.setAdapter(new CustomAdaptr(getApplicationContext(),names));
             }
         });
+
 
         button_back.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -72,6 +67,17 @@ public class DatabaseActivity extends AppCompatActivity {
         });
 
 
+
+
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        names = (ArrayList<QuizEntry>) getIntent().getSerializableExtra("names");
+        Collections.sort(names);
+        CustomAdaptr customAdaptr = new CustomAdaptr(getApplicationContext(),names);
+        listView.setAdapter(customAdaptr);
 
 
     }

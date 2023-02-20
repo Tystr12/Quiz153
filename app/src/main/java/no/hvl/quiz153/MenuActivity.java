@@ -74,8 +74,8 @@ public class MenuActivity extends AppCompatActivity {
         Intent intent = new Intent();
         switch (type) {
             case "db":
-intent.setClass(this,DatabaseActivity.class);
-break;
+                intent.setClass(this,DatabaseActivity.class);
+        break;
             case "quiz":
                 intent.setClass(this, QuizActivity.class);
         }
