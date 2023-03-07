@@ -1,7 +1,7 @@
 package no.hvl.quiz153;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
+import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,20 +13,16 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.List;
 
-// provides a ListView over all the elements in the database
-// the class ensures that the correct text appears in the correct element
 public class CustomAdaptr extends BaseAdapter {
 
-    Context context;
-    ArrayList<QuizEntry> entryList;
-    LayoutInflater inflater;
+    private Context context;
+    private ArrayList<QuizEntry> entryList;
+    private LayoutInflater inflater;
 
-    public CustomAdaptr(Context ctx, ArrayList<QuizEntry> entryList) {
-
-        this.context = ctx;
+    public CustomAdaptr(Context context, ArrayList<QuizEntry> entryList) {
+        this.context = context;
         this.entryList = entryList;
-        this.inflater = LayoutInflater.from(ctx);
-
+        this.inflater = LayoutInflater.from(context);
     }
 
     @Override
@@ -41,30 +37,46 @@ public class CustomAdaptr extends BaseAdapter {
 
     @Override
     public long getItemId(int position) {
-        return 0;
+        return entryList.get(position).getEId();
     }
 
-    @SuppressLint("ViewHolder")
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        convertView = inflater.inflate(R.layout.activity_custom_list_view,null);
-        TextView textView = (TextView) convertView.findViewById(R.id.txt_bar);
-        ImageView imageView = (ImageView) convertView.findViewById(R.id.img_icon);
-        Button button = (Button) convertView.findViewById(R.id.button_delete);
-        final QuizEntry a = getItem(position);
-        textView.setText(entryList.get(position).getText());
-        imageView.setImageResource(entryList.get(position).getImg());
+        ViewHolder holder;
+        if (convertView == null) {
+            convertView = inflater.inflate(R.layout.activity_custom_list_view, parent, false);
+            holder = new ViewHolder();
+            holder.textView = convertView.findViewById(R.id.txt_bar);
+            holder.imageView = convertView.findViewById(R.id.img_icon);
+            holder.deleteButton = convertView.findViewById(R.id.button_delete);
+            convertView.setTag(holder);
+        } else {
+            holder = (ViewHolder) convertView.getTag();
+        }
 
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (getCount() > 3 ) {
-                    entryList.remove(a);
-                    notifyDataSetChanged();
-                }
+        QuizEntry quizEntry = entryList.get(position);
+
+        holder.textView.setText(quizEntry.getText());
+        Uri imageUri = quizEntry.getImg();
+        if (imageUri != null) {
+            holder.imageView.setImageURI(imageUri);
+        } else {
+            holder.imageView.setImageResource(R.drawable.ic_launcher_background);
+        }
+
+        holder.deleteButton.setOnClickListener(v -> {
+            if (entryList.size() > 3) {
+                entryList.remove(position);
+                notifyDataSetChanged();
             }
-
         });
+
         return convertView;
+    }
+
+    static class ViewHolder {
+        TextView textView;
+        ImageView imageView;
+        Button deleteButton;
     }
 }

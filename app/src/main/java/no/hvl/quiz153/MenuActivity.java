@@ -2,6 +2,9 @@ package no.hvl.quiz153;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.ContentResolver;
+import android.content.ContentValues;
+import android.os.Build;
 import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -13,6 +16,8 @@ import android.view.View;
 import android.widget.Button;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 
 
 //This class provides a visual of the main page of the application with the choices the user can make
@@ -35,11 +40,21 @@ public class MenuActivity extends AppCompatActivity {
         buttonHard = (Button) findViewById(R.id.button_hard);
         buttonStart = (Button) findViewById(R.id.button_start);
         buttonDatabase = (Button) findViewById(R.id.button_db);
-        this.names.add(new QuizEntry("Iver", R.drawable.iver));
-        this.names.add(new QuizEntry("Ty", R.drawable.ty));
-        this.names.add(new QuizEntry("ISELIN", R.drawable.iselin));
-        this.names.add(new QuizEntry("abab", R.drawable.ic_launcher_background));
-        this.names.add(new QuizEntry("PAPPA",R.drawable.ic_launcher_foreground));
+        // Get a ContentResolver instance
+
+// Create a ContentValues object to hold the entry's values
+
+        QuizEntryRepository repo = new QuizEntryRepository(getApplication());
+
+            repo.insert(new QuizEntry("Iver", R.drawable.iver));
+
+
+            List<QuizEntry> list = repo.getAllEntries().getValue();
+            if (list != null) {
+                Log.d("AAAAA", list.toString());
+
+                names.addAll(list);
+            }
 
 
 
