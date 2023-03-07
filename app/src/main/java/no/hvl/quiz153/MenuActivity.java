@@ -46,11 +46,11 @@ public class MenuActivity extends AppCompatActivity {
         buttonDatabase = (Button) findViewById(R.id.button_db);
         // Get a ContentResolver instance
         MainViewModel mViewModel = new ViewModelProvider(this).get(MainViewModel.class);
-        mViewModel.insertQuizEntry(new QuizEntry("IVER", R.drawable.iver));
         mViewModel.getAllQuizEntrys().observe(this, quizEntries -> {
             // Add the new data to the names ArrayList
             names.clear();
             names.addAll(quizEntries);
+
         });
 
 
@@ -73,15 +73,7 @@ public class MenuActivity extends AppCompatActivity {
 
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-        Intent intent = getIntent();
-        Bundle extras = intent.getExtras();
-        if (extras != null) {
-            this.names = (ArrayList<QuizEntry>) getIntent().getSerializableExtra("names");
-        }
-    }
+
 
     private void act(String type) {
         Intent intent = new Intent();
@@ -92,7 +84,7 @@ public class MenuActivity extends AppCompatActivity {
             case "quiz":
                 intent.setClass(this, QuizActivity.class);
         }
-        intent.putExtra("names", names);
+
         startActivity(intent);
 
 

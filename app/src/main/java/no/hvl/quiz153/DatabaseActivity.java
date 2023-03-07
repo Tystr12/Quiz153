@@ -12,6 +12,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ListView;
 
+import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
@@ -24,6 +25,8 @@ import java.util.Collections;
 
 public class DatabaseActivity extends AppCompatActivity {
     ArrayList<QuizEntry> names = new ArrayList<>();
+
+    MainViewModel mViewModel;
 
     ListView listView;
 
@@ -43,11 +46,20 @@ public class DatabaseActivity extends AppCompatActivity {
         button_sort = (Button) findViewById(R.id.button_sort);
         button_back = (Button) findViewById(R.id.button_back);
         button_newentry = (Button) findViewById(R.id.button_addentry);
+        mViewModel = new ViewModelProvider(this).get(MainViewModel.class);
+        mViewModel.getAllQuizEntrys().observe(this, quizEntries -> {
+            // Add the new data to the names ArrayList
+            names.clear();
+            names.addAll(quizEntries);
+            CustomAdaptr customAdaptr = new CustomAdaptr(getApplicationContext(),names, mViewModel);
+            listView.setAdapter(customAdaptr);
+
+        });
         button_sort.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Collections.reverse(names);
-                listView.setAdapter(new CustomAdaptr(getApplicationContext(),names));
+                listView.setAdapter(new CustomAdaptr(getApplicationContext(),names, mViewModel));
             }
         });
 
@@ -71,16 +83,6 @@ public class DatabaseActivity extends AppCompatActivity {
 
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-        names = (ArrayList<QuizEntry>) getIntent().getSerializableExtra("names");
-        Collections.sort(names);
-        CustomAdaptr customAdaptr = new CustomAdaptr(getApplicationContext(),names);
-        listView.setAdapter(customAdaptr);
-
-
-    }
 
     private void act(String type) {
         Intent intent = new Intent();

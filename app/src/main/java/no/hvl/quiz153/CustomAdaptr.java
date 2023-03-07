@@ -15,14 +15,16 @@ import java.util.List;
 
 public class CustomAdaptr extends BaseAdapter {
 
+    MainViewModel mViewModel;
     private Context context;
     private ArrayList<QuizEntry> entryList;
     private LayoutInflater inflater;
 
-    public CustomAdaptr(Context context, ArrayList<QuizEntry> entryList) {
+    public CustomAdaptr(Context context, ArrayList<QuizEntry> entryList, MainViewModel mvm) {
         this.context = context;
         this.entryList = entryList;
         this.inflater = LayoutInflater.from(context);
+        this.mViewModel = mvm;
     }
 
     @Override
@@ -65,8 +67,8 @@ public class CustomAdaptr extends BaseAdapter {
         }
 
         holder.deleteButton.setOnClickListener(v -> {
-            if (entryList.size() > 3) {
-                entryList.remove(position);
+            if (getCount() > 3) {
+                mViewModel.deleteQuizEntry(quizEntry);
                 notifyDataSetChanged();
             }
         });
