@@ -8,6 +8,7 @@ import android.os.Build;
 import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProvider;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -18,6 +19,7 @@ import android.widget.Button;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+
 
 
 //This class provides a visual of the main page of the application with the choices the user can make
@@ -31,6 +33,8 @@ public class MenuActivity extends AppCompatActivity {
 
     ArrayList<QuizEntry> names = new ArrayList<>();
 
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,22 +45,16 @@ public class MenuActivity extends AppCompatActivity {
         buttonStart = (Button) findViewById(R.id.button_start);
         buttonDatabase = (Button) findViewById(R.id.button_db);
         // Get a ContentResolver instance
+        MainViewModel mViewModel = new ViewModelProvider(this).get(MainViewModel.class);
+        mViewModel.insertQuizEntry(new QuizEntry("IVER", R.drawable.iver));
+        mViewModel.getAllQuizEntrys().observe(this, quizEntries -> {
+            // Add the new data to the names ArrayList
+            names.clear();
+            names.addAll(quizEntries);
+        });
+
 
 // Create a ContentValues object to hold the entry's values
-
-        QuizEntryRepository repo = new QuizEntryRepository(getApplication());
-
-            repo.insert(new QuizEntry("Iver", R.drawable.iver));
-
-
-            List<QuizEntry> list = repo.getAllEntries().getValue();
-            if (list != null) {
-                Log.d("AAAAA", list.toString());
-
-                names.addAll(list);
-            }
-
-
 
         //Redirects the user to the correct page
         buttonDatabase.setOnClickListener(new View.OnClickListener() {
