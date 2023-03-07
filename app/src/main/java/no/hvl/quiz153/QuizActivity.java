@@ -103,7 +103,7 @@ public class QuizActivity extends AppCompatActivity {
         button_copy.remove(random.nextInt(3)).setText(curr_answer.getText());
         button_copy.remove(0).setText(wrongs.get(0).getText());
         button_copy.remove(0).setText(wrongs.get(1).getText());
-        imageView.setImageResource(curr_answer.getImg());
+        imageView.setImageURI(curr_answer.getImg());
     }
 
     private void checkAnswer(String text) {

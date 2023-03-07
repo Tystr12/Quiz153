@@ -1,25 +1,40 @@
 package no.hvl.quiz153;
 
-import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import androidx.annotation.DrawableRes;
 import androidx.annotation.NonNull;
+import androidx.room.ColumnInfo;
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
 
-public class QuizEntry implements Parcelable, Comparable<QuizEntry>{
+@Entity(tableName = "quiz_database")
+public class QuizEntry implements Parcelable, Comparable<QuizEntry> {
+
+    @ColumnInfo(name = "entry_id")
+    @PrimaryKey(autoGenerate = true)
+    @NonNull
+    private int eId;
+
     private String text;
-    
-    private int img;
+    private Uri img;
 
-    public QuizEntry(String text, int img) {
+    public QuizEntry(String text, Uri img) {
         this.text = text;
         this.img = img;
+        this.eId = eId;
+    }
+
+    public QuizEntry(String text, int imgResourceId) {
+        this.text = text;
+        this.img = Uri.parse("android.resource://no.hvl.quiz153/" + imgResourceId);
+        this.eId = eId;
     }
 
     protected QuizEntry(Parcel in) {
         text = in.readString();
-        img = in.readInt();
+        img = in.readParcelable(Uri.class.getClassLoader());
     }
 
     public static final Creator<QuizEntry> CREATOR = new Creator<QuizEntry>() {
@@ -33,7 +48,13 @@ public class QuizEntry implements Parcelable, Comparable<QuizEntry>{
             return new QuizEntry[size];
         }
     };
+    public int getEId() {
+        return eId;
+    }
 
+    public void setEId(int eId) {
+        this.eId = eId;
+    }
     public String getText() {
         return text;
     }
@@ -50,14 +71,17 @@ public class QuizEntry implements Parcelable, Comparable<QuizEntry>{
                 '}';
     }
 
-    public int getImg() {
+    public Uri getImg() {
         return img;
     }
 
-    public void setImg(int img) {
+    public void setImg(Uri img) {
         this.img = img;
     }
 
+    public void setImg(int imgResourceId) {
+        this.img = Uri.parse("android.resource://no.hvl.quiz153/" + imgResourceId);
+    }
 
     @Override
     public int describeContents() {
@@ -67,7 +91,7 @@ public class QuizEntry implements Parcelable, Comparable<QuizEntry>{
     @Override
     public void writeToParcel(@NonNull Parcel dest, int flags) {
         dest.writeString(text);
-        dest.writeInt(img);
+        dest.writeParcelable(img, flags);
     }
 
     @Override
