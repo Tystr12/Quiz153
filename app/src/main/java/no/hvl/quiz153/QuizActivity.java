@@ -1,6 +1,7 @@
 package no.hvl.quiz153;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProvider;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
@@ -19,7 +20,7 @@ import java.util.Random;
 public class QuizActivity extends AppCompatActivity {
 
 
-
+    MainViewModel mainViewModel;
     int score;
     int total;
     ArrayList<QuizEntry> names = new ArrayList<>();
@@ -41,8 +42,14 @@ public class QuizActivity extends AppCompatActivity {
         button_list.add(findViewById(R.id.button_answer1));
         button_list.add(findViewById(R.id.button_answer2));
         button_list.add(findViewById(R.id.button_answer3));
+        mainViewModel = new ViewModelProvider(this).get(MainViewModel.class);
+        mainViewModel.getAllQuizEntrys().observe(this, quizEntries -> {
+            // Add the new data to the names ArrayList
+            names.clear();
+            names.addAll(quizEntries);
+            setAnswers();
 
-
+        });
         button_list.forEach((x) -> x.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -61,11 +68,11 @@ public class QuizActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        this.names = (ArrayList<QuizEntry>) getIntent().getSerializableExtra("names");
         total = 0;
         score = 0;
-        setAnswers();
-
+        if (!names.isEmpty()){
+            setAnswers();
+        }
     }
 
     private void act(String type) {
@@ -75,7 +82,6 @@ public class QuizActivity extends AppCompatActivity {
                 intent.setClass(this, MenuActivity.class);
                 break;
         }
-        intent.putExtra("names",names);
         startActivity(intent);
 
 

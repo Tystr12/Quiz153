@@ -19,7 +19,7 @@ import android.widget.Button;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-
+import java.util.Objects;
 
 
 //This class provides a visual of the main page of the application with the choices the user can make
@@ -46,12 +46,11 @@ public class MenuActivity extends AppCompatActivity {
         buttonDatabase = (Button) findViewById(R.id.button_db);
         // Get a ContentResolver instance
         MainViewModel mViewModel = new ViewModelProvider(this).get(MainViewModel.class);
-        mViewModel.getAllQuizEntrys().observe(this, quizEntries -> {
-            // Add the new data to the names ArrayList
-            names.clear();
-            names.addAll(quizEntries);
 
-        });
+            mViewModel.insertQuizEntry(new QuizEntry("1",R.drawable.ty));
+            mViewModel.insertQuizEntry(new QuizEntry("2",R.drawable.iselin));
+
+            mViewModel.insertQuizEntry(new QuizEntry("3",R.drawable.iver));
 
 
 // Create a ContentValues object to hold the entry's values
