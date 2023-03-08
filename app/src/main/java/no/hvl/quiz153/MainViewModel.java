@@ -15,6 +15,7 @@ public class MainViewModel extends AndroidViewModel {
     private LiveData<List<QuizEntry>> allQuizEntrys;
 
     public MainViewModel(@NonNull Application application) {
+
         super(application);
         this.repository = new QuizEntryRepository(application);
         this.allQuizEntrys = repository.getAllEntries();

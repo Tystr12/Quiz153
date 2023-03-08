@@ -2,6 +2,7 @@ package no.hvl.quiz153;
 
 import android.content.Context;
 import android.net.Uri;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,6 +11,9 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.lifecycle.Lifecycle;
+import androidx.lifecycle.LifecycleOwner;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,12 +21,18 @@ public class CustomAdaptr extends BaseAdapter {
 
     MainViewModel mViewModel;
     private Context context;
-    private ArrayList<QuizEntry> entryList;
+    private ArrayList<QuizEntry> entryList = new ArrayList<>();
     private LayoutInflater inflater;
 
-    public CustomAdaptr(Context context, ArrayList<QuizEntry> entryList, MainViewModel mvm) {
+    public CustomAdaptr(Context context, MainViewModel mvm, LifecycleOwner owner) {
         this.context = context;
-        this.entryList = entryList;
+        mvm.getAllQuizEntrys().observe(owner, quizEntries -> {
+            // Add the new data to the names ArrayList
+            entryList.clear();
+            entryList.addAll(quizEntries);
+            notifyDataSetChanged();
+
+        });
         this.inflater = LayoutInflater.from(context);
         this.mViewModel = mvm;
     }
@@ -57,6 +67,7 @@ public class CustomAdaptr extends BaseAdapter {
         }
 
         QuizEntry quizEntry = entryList.get(position);
+        Log.d("AAA",quizEntry.toString());
 
         holder.textView.setText(quizEntry.getText());
         Uri imageUri = quizEntry.getImg();

@@ -12,6 +12,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ListView;
 
+import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
@@ -49,17 +50,14 @@ public class DatabaseActivity extends AppCompatActivity {
         mViewModel = new ViewModelProvider(this).get(MainViewModel.class);
         mViewModel.getAllQuizEntrys().observe(this, quizEntries -> {
             // Add the new data to the names ArrayList
-            names.clear();
-            names.addAll(quizEntries);
-            CustomAdaptr customAdaptr = new CustomAdaptr(getApplicationContext(),names, mViewModel);
+            CustomAdaptr customAdaptr = new CustomAdaptr(getApplicationContext(), mViewModel,this);
             listView.setAdapter(customAdaptr);
 
         });
         button_sort.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Collections.reverse(names);
-                listView.setAdapter(new CustomAdaptr(getApplicationContext(),names, mViewModel));
+                listView.setAdapter(new CustomAdaptr(getApplicationContext(), mViewModel,DatabaseActivity.this));
             }
         });
 
@@ -95,7 +93,6 @@ public class DatabaseActivity extends AppCompatActivity {
                 intent.setClass(this, NewEntryActivity.class);
                 break;
         }
-        intent.putExtra("names", names);
         startActivity(intent);
 
 

@@ -7,6 +7,7 @@ import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProvider;
 
 import android.content.Intent;
 import android.database.Cursor;
@@ -23,7 +24,7 @@ import java.util.ArrayList;
 
 public class NewEntryActivity extends AppCompatActivity {
 
-    private ArrayList<QuizEntry> names = new ArrayList<>();
+    private MainViewModel mainViewModel;
 
     private Button backButton;
     private ImageView imageView;
@@ -49,7 +50,7 @@ public class NewEntryActivity extends AppCompatActivity {
                                 null
                         );
                         cursor.moveToFirst();
-                        addImg(data.getData());
+                        addImg(data.getData().normalizeScheme());
                     }
                 }
             }
@@ -60,7 +61,6 @@ public class NewEntryActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_entry);
 
-        names = (ArrayList<QuizEntry>) getIntent().getSerializableExtra("names");
 
         backButton = findViewById(R.id.button_back);
         imageView = findViewById(R.id.imageView_upload);
@@ -68,6 +68,7 @@ public class NewEntryActivity extends AppCompatActivity {
         inputEditText = findViewById(R.id.input);
         confirmButton = findViewById(R.id.button_confirm);
 
+        mainViewModel =new ViewModelProvider(this).get(MainViewModel.class);
         // Listener for back button.
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -99,7 +100,7 @@ public class NewEntryActivity extends AppCompatActivity {
         String text = acquireText();
         Uri pic = acquirePicture();
         if (!text.isEmpty() && pic != null) {
-            names.add(new QuizEntry(text, pic));
+            mainViewModel.insertQuizEntry(new QuizEntry(text, pic));
             act("back");
         } else {
             // User gets error
@@ -136,11 +137,8 @@ public class NewEntryActivity extends AppCompatActivity {
 
                 break;
             }
-        intent.putExtra("names",names);
         startActivity(intent);
     }
-
-
     public ActivityResultLauncher<Intent> getLauncher() {
         return launcher;
     }
