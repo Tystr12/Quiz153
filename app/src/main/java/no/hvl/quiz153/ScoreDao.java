@@ -5,7 +5,6 @@ import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.Query;
-import androidx.room.Update;
 
 import java.util.List;
 
@@ -20,9 +19,14 @@ public interface ScoreDao {
     @Delete
     void deleteScore(ScoreEntity score);
 
+    @Query("DELETE FROM score_table")
+    void deleteAll();
+
     @Query("UPDATE score_table SET score = score + 1")
     void updateScore();
 
     @Query("UPDATE score_table SET total = total + 1")
     void updateTotal();
+
+
 }

@@ -34,6 +34,9 @@ public class ScoreRepository {
         new DeleteScoreAsyncTask(scoreDao).execute(scoreEntity);
     }
 
+    public void deleteAll() {
+        new DeleteAllScoreAsyncTask(scoreDao).execute();
+    }
 
 
     public LiveData<List<ScoreEntity>> getAllScores() {
@@ -95,5 +98,17 @@ public class ScoreRepository {
             return null;
         }
     }
+    private static class DeleteAllScoreAsyncTask extends AsyncTask<ScoreEntity, Void, Void> {
+        private ScoreDao scoreDao;
 
+        private DeleteAllScoreAsyncTask(ScoreDao scoreDao) {
+            this.scoreDao = scoreDao;
+        }
+
+        @Override
+        protected Void doInBackground(ScoreEntity... scoreEntities) {
+            scoreDao.deleteAll();
+            return null;
+        }
+    }
     }

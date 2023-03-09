@@ -1,10 +1,7 @@
 package no.hvl.quiz153;
 
 import android.content.Context;
-import android.graphics.Bitmap;
 import android.net.Uri;
-import android.provider.MediaStore;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,11 +10,9 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import androidx.lifecycle.Lifecycle;
 import androidx.lifecycle.LifecycleOwner;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class CustomAdaptr extends BaseAdapter {
 
@@ -73,8 +68,13 @@ public class CustomAdaptr extends BaseAdapter {
         holder.textView.setText(quizEntry.getText());
         Uri imageUri = quizEntry.getImg();
         if (imageUri != null) {
-            Uri uri = MediaStore.Images.Media.getContentUri(imageUri.toString());
-            holder.imageView.setImageURI(imageUri);
+            try {
+                holder.imageView.setImageURI(imageUri);
+
+            } catch (Exception e) {
+                holder.imageView.setImageResource(R.drawable.ic_launcher_background);
+
+            }
         } else {
             holder.imageView.setImageResource(R.drawable.ic_launcher_background);
         }

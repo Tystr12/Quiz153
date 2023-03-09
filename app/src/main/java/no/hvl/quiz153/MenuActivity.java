@@ -1,25 +1,14 @@
 package no.hvl.quiz153;
 
-import androidx.appcompat.app.AppCompatActivity;
-
-import android.content.ContentResolver;
-import android.content.ContentValues;
-import android.os.Build;
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 
-import android.content.Intent;
-import android.os.Bundle;
-import android.util.Log;
-import android.view.View;
-import android.widget.Button;
-
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-import java.util.Objects;
 
 
 //This class provides a visual of the main page of the application with the choices the user can make
@@ -47,10 +36,15 @@ public class MenuActivity extends AppCompatActivity {
         // Get a ContentResolver instance
         MainViewModel mViewModel = new ViewModelProvider(this).get(MainViewModel.class);
 
-            mViewModel.insertQuizEntry(new QuizEntry("1",R.drawable.ty));
-            mViewModel.insertQuizEntry(new QuizEntry("2",R.drawable.iselin));
 
-            mViewModel.insertQuizEntry(new QuizEntry("3",R.drawable.iver));
+        mViewModel.getAllQuizEntrys().observe(this, quizEntries -> {
+            if (quizEntries.isEmpty()){
+                mViewModel.insertQuizEntry(new QuizEntry("1",R.drawable.ty));
+                mViewModel.insertQuizEntry(new QuizEntry("2",R.drawable.iselin));
+                mViewModel.insertQuizEntry(new QuizEntry("3",R.drawable.iver));
+            }
+        });
+
 
 
 // Create a ContentValues object to hold the entry's values

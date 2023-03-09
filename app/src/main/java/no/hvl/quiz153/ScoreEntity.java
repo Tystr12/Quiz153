@@ -1,14 +1,11 @@
 package no.hvl.quiz153;
 
 
-import android.net.Uri;
-import android.os.Parcelable;
-
 import androidx.annotation.NonNull;
-import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity(tableName = "score_table")
@@ -20,14 +17,16 @@ public class ScoreEntity {
         @NonNull
         private int qId;
 
-        private int score = 0 ;
-        private int total = 0;
+        private int score;
+        private int total;
 
         private QuizEntry curr_answer;
         private List<QuizEntry> curr_wrongs;
 
 
-        public ScoreEntity(List<QuizEntry> curr_wrongs, QuizEntry curr_answer) {
+        public ScoreEntity(int score, int total, List<QuizEntry> curr_wrongs, QuizEntry curr_answer) {
+            this.score = score;
+            this.total = total;
             this.curr_wrongs = curr_wrongs;
             this.curr_answer = curr_answer;
         }
@@ -68,7 +67,7 @@ public class ScoreEntity {
         return curr_wrongs;
     }
 
-    public void setCurr_wrongs(List<QuizEntry> curr_wrongs) {
+    public void setCurr_wrongs(ArrayList<QuizEntry> curr_wrongs) {
         this.curr_wrongs = curr_wrongs;
     }
 }

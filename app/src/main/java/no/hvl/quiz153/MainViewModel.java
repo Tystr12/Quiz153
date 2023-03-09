@@ -5,7 +5,6 @@ import android.app.Application;
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
-import androidx.lifecycle.MutableLiveData;
 
 import java.util.List;
 
@@ -57,4 +56,6 @@ public class MainViewModel extends AndroidViewModel {
 
     public void updateScore() {scoreRepository.updateScore();}
     public void updateTotal() {scoreRepository.updateTotal();}
+
+    public void deleteAllScore() {scoreRepository.deleteAll();}
 }
