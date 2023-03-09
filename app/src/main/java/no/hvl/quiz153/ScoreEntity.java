@@ -27,6 +27,11 @@ public class ScoreEntity {
         private List<QuizEntry> curr_wrongs;
 
 
+        public ScoreEntity(List<QuizEntry> curr_wrongs, QuizEntry curr_answer) {
+            this.curr_wrongs = curr_wrongs;
+            this.curr_answer = curr_answer;
+        }
+
     public int getQId() {
         return qId;
     }
@@ -51,4 +56,19 @@ public class ScoreEntity {
         this.total = total;
     }
 
+    public QuizEntry getCurr_answer() {
+        return curr_answer;
+    }
+
+    public void setCurr_answer(QuizEntry curr_answer) {
+        this.curr_answer = curr_answer;
+    }
+
+    public List<QuizEntry> getCurr_wrongs() {
+        return curr_wrongs;
+    }
+
+    public void setCurr_wrongs(List<QuizEntry> curr_wrongs) {
+        this.curr_wrongs = curr_wrongs;
+    }
 }

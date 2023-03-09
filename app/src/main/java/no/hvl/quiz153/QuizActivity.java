@@ -50,18 +50,20 @@ public class QuizActivity extends AppCompatActivity {
             names.clear();
             names.addAll(quizEntries);
             setAnswers();
-
+            List<ScoreEntity> scores = mainViewModel.getAllScores().getValue();
+            if (scores == null || scores.isEmpty()) {
+                mainViewModel.insertScore(new ScoreEntity(curr_wrongs,curr_answer));
+            }
         });
 
 
-        List<ScoreEntity> scores = mainViewModel.getAllScores().getValue();
-        if (scores == null || scores.isEmpty()) {
-            mainViewModel.insertScore(new ScoreEntity());
-        }
+
         mainViewModel.getAllScores().observe(this, scoreEntities -> {
-            score = scoreEntities.get(0).getScore();
-            total = scoreEntities.get(0).getTotal();
-            Log.d("AAAAAAAA", String.valueOf(scoreEntities.get(0).getScore()));
+            if (!scoreEntities.isEmpty()){
+                score = scoreEntities.get(0).getScore();
+                total = scoreEntities.get(0).getTotal();
+            }
+
             setScore();
         });
         button_list.forEach((x) -> x.setOnClickListener(new View.OnClickListener() {
