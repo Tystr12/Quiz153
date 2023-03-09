@@ -1,7 +1,9 @@
 package no.hvl.quiz153;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.net.Uri;
+import android.provider.MediaStore;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -67,11 +69,11 @@ public class CustomAdaptr extends BaseAdapter {
         }
 
         QuizEntry quizEntry = entryList.get(position);
-        Log.d("AAA",quizEntry.toString());
 
         holder.textView.setText(quizEntry.getText());
         Uri imageUri = quizEntry.getImg();
         if (imageUri != null) {
+            Uri uri = MediaStore.Images.Media.getContentUri(imageUri.toString());
             holder.imageView.setImageURI(imageUri);
         } else {
             holder.imageView.setImageResource(R.drawable.ic_launcher_background);

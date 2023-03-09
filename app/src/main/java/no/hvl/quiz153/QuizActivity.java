@@ -31,6 +31,8 @@ public class QuizActivity extends AppCompatActivity {
     ArrayList<Button> button_list = new ArrayList<>();
     QuizEntry curr_answer;
 
+    ArrayList<QuizEntry> curr_wrongs = new ArrayList<>();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,6 +52,18 @@ public class QuizActivity extends AppCompatActivity {
             setAnswers();
 
         });
+
+
+        List<ScoreEntity> scores = mainViewModel.getAllScores().getValue();
+        if (scores == null || scores.isEmpty()) {
+            mainViewModel.insertScore(new ScoreEntity());
+        }
+        mainViewModel.getAllScores().observe(this, scoreEntities -> {
+            score = scoreEntities.get(0).getScore();
+            total = scoreEntities.get(0).getTotal();
+            Log.d("AAAAAAAA", String.valueOf(scoreEntities.get(0).getScore()));
+            setScore();
+        });
         button_list.forEach((x) -> x.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -65,15 +79,7 @@ public class QuizActivity extends AppCompatActivity {
     }
 
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-        total = 0;
-        score = 0;
-        if (!names.isEmpty()){
-            setAnswers();
-        }
-    }
+
 
     private void act(String type) {
         Intent intent = new Intent();
@@ -105,19 +111,20 @@ public class QuizActivity extends AppCompatActivity {
     public void setAnswers() {
         ArrayList<Button> button_copy = (ArrayList<Button>) button_list.clone();
         Random random = new Random();
-        ArrayList<QuizEntry> wrongs = getRandomSublist((ArrayList<QuizEntry>)names.clone());
+        curr_wrongs.clear();
+        curr_wrongs = getRandomSublist((ArrayList<QuizEntry>)names.clone());
         button_copy.remove(random.nextInt(3)).setText(curr_answer.getText());
-        button_copy.remove(0).setText(wrongs.get(0).getText());
-        button_copy.remove(0).setText(wrongs.get(1).getText());
+        button_copy.remove(0).setText(curr_wrongs.get(0).getText());
+        button_copy.remove(0).setText(curr_wrongs.get(1).getText());
         imageView.setImageURI(curr_answer.getImg());
     }
 
     private void checkAnswer(String text) {
         if (text.equals(curr_answer.getText())) {
-            score++;
+            mainViewModel.updateScore();
         }
-        total++;
-        setScore();
+        mainViewModel.updateTotal();
+
         setAnswers();
     }
 

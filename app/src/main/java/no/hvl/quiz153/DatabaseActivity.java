@@ -62,9 +62,12 @@ public class DatabaseActivity extends AppCompatActivity {
         });
 
 
+
         button_back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Log.d("HERE", getContentResolver().toString());
+
                 act("menu");
             }
         });

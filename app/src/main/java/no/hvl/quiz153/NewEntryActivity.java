@@ -1,5 +1,7 @@
 package no.hvl.quiz153;
 
+import static android.content.Intent.FLAG_GRANT_PERSISTABLE_URI_PERMISSION;
+import static android.content.Intent.FLAG_GRANT_READ_URI_PERMISSION;
 import static java.lang.Float.NaN;
 
 import androidx.activity.result.ActivityResult;
@@ -81,7 +83,10 @@ public class NewEntryActivity extends AppCompatActivity {
         addPictureButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                Intent intent = new Intent(Intent.ACTION_PICK);
+                intent.setType("image/*");
+                intent.addFlags(FLAG_GRANT_READ_URI_PERMISSION);
+                intent.addFlags(FLAG_GRANT_PERSISTABLE_URI_PERMISSION);
                 launcher.launch(intent);
             }
         });
@@ -94,6 +99,7 @@ public class NewEntryActivity extends AppCompatActivity {
             }
         });
     }
+
 
     // Adds new entry to the "database" list.
     private void addToList() {
