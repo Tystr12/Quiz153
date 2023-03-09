@@ -31,7 +31,7 @@ public class QuizActivity extends AppCompatActivity {
     Button button_back;
 
     ArrayList<Button> button_list = new ArrayList<>();
-    QuizEntry curr_answer;
+    public QuizEntry curr_answer;
 
     ArrayList<QuizEntry> curr_wrongs = new ArrayList<>();
 
@@ -92,11 +92,17 @@ public class QuizActivity extends AppCompatActivity {
     }
 
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+
+        }
+
 
     @Override
     protected void onPause() {
         super.onPause();
-        Log.d("PAUSE", curr_wrongs.toString());
         mainViewModel.deleteAllScore();
         mainViewModel.insertScore(new ScoreEntity(score,total,curr_wrongs, curr_answer));
 
