@@ -2,7 +2,16 @@ package no.hvl.quiz153;
 
 import static android.content.Intent.FLAG_GRANT_PERSISTABLE_URI_PERMISSION;
 import static android.content.Intent.FLAG_GRANT_READ_URI_PERMISSION;
-import static java.lang.Float.NaN;
+
+import android.content.Intent;
+import android.database.Cursor;
+import android.net.Uri;
+import android.os.Bundle;
+import android.provider.MediaStore;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ImageView;
 
 import androidx.activity.result.ActivityResult;
 import androidx.activity.result.ActivityResultCallback;
@@ -10,19 +19,6 @@ import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
-
-import android.content.Intent;
-import android.database.Cursor;
-import android.net.Uri;
-import android.os.Bundle;
-import android.provider.MediaStore;
-import android.util.Log;
-import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.ImageView;
-
-import java.util.ArrayList;
 
 public class NewEntryActivity extends AppCompatActivity {
 
@@ -33,7 +29,7 @@ public class NewEntryActivity extends AppCompatActivity {
     private Button addPictureButton;
     private EditText inputEditText;
     private Button confirmButton;
-    private Uri currentImage;
+    public Uri currentImage;
 
     private final int GALLERY_REQ_CODE = 200;
 

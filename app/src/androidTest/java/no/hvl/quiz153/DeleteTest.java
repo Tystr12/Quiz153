@@ -15,6 +15,8 @@ import org.junit.runner.RunWith;
 public class DeleteTest {
 
     private DatabaseActivity databaseActivity;
+    private NewEntryActivity newEntryActivity;
+
 
     @Before
     public void setUp() {
@@ -42,5 +44,5 @@ return;
 
     }
     
-    
+
 }
