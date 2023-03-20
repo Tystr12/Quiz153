@@ -1,7 +1,13 @@
 package no.hvl.quiz153;
 
+import static androidx.test.espresso.Espresso.onData;
+import static androidx.test.espresso.Espresso.onView;
+import static androidx.test.espresso.action.ViewActions.click;
+import static androidx.test.espresso.matcher.ViewMatchers.withId;
+import static org.hamcrest.Matchers.anything;
 import static org.junit.Assert.assertEquals;
 
+import android.util.Log;
 import android.widget.ListView;
 
 import androidx.test.core.app.ActivityScenario;
@@ -36,8 +42,12 @@ return;
 
         int expectedSize = initialSize-1;
 
-        listView.performItemClick(listView.getChildAt(0),0,listView.getChildAt(0).getId());
 
+
+        onData(anything()).inAdapterView(withId(R.id.my_list    )).atPosition(0).onChildView(withId(R.id.button_delete)).
+                perform(click());
+
+        Log.d("DEBUG", String.valueOf(listView.getChildAt(0).getId()));
         // Check that the item has been removed from the ListView
         int newSize = listView.getAdapter().getCount();
         assertEquals(expectedSize, newSize);
