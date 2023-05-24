@@ -60,7 +60,6 @@ public class QuizActivity extends AppCompatActivity {
             } else {
                 setNewAnswers();
             }
-            Log.d("ASFASDF", names.toString());
 
         });
 

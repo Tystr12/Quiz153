@@ -1,13 +1,10 @@
 package no.hvl.quiz153;
 
-import static android.content.Intent.FLAG_GRANT_PERSISTABLE_URI_PERMISSION;
 import static android.content.Intent.FLAG_GRANT_READ_URI_PERMISSION;
 
 import android.content.Intent;
-import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
-import android.provider.MediaStore;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -38,18 +35,10 @@ public class NewEntryActivity extends AppCompatActivity {
             new ActivityResultCallback<ActivityResult>() {
                 @Override
                 public void onActivityResult(ActivityResult result) {
-                    if (result.getResultCode() == RESULT_OK) {
-                        Intent data = result.getData();
-                        Cursor cursor = getContentResolver().query(
-                                data.getData(),
-                                new String[]{MediaStore.Images.Media.DATA},
-                                null,
-                                null,
-                                null
-                        );
-                        cursor.moveToFirst();
-                        addImg(data.getData().normalizeScheme());
-                    }
+                    if (result.getResultCode() != RESULT_OK || result.getData() == null) return;
+                        currentImage = result.getData().getData();
+                        getContentResolver().takePersistableUriPermission(currentImage, FLAG_GRANT_READ_URI_PERMISSION);
+                    imageView.setImageURI(currentImage);
                 }
             }
     );
@@ -58,7 +47,6 @@ public class NewEntryActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_entry);
-
 
         backButton = findViewById(R.id.button_back);
         imageView = findViewById(R.id.imageView_upload);
@@ -79,10 +67,10 @@ public class NewEntryActivity extends AppCompatActivity {
         addPictureButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(Intent.ACTION_PICK);
+                Intent intent = new Intent();
                 intent.setType("image/*");
-                intent.addFlags(FLAG_GRANT_READ_URI_PERMISSION);
-                intent.addFlags(FLAG_GRANT_PERSISTABLE_URI_PERMISSION);
+                intent.setAction(Intent.ACTION_OPEN_DOCUMENT);
+                intent.addCategory(Intent.CATEGORY_OPENABLE);
                 launcher.launch(intent);
             }
         });
@@ -91,43 +79,13 @@ public class NewEntryActivity extends AppCompatActivity {
         confirmButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                addToList();
+               // addToList();
+                QuizEntry quizEntry = new QuizEntry(inputEditText.getText().toString(),currentImage);
+                mainViewModel.insertQuizEntry(quizEntry);
+                act("back");
+
             }
         });
-    }
-
-
-    // Adds new entry to the "database" list.
-    private void addToList() {
-        String text = acquireText();
-        Uri pic = acquirePicture();
-        if (!text.isEmpty() && pic != null) {
-            mainViewModel.insertQuizEntry(new QuizEntry(text, pic));
-            act("back");
-        } else {
-            // User gets error
-        }
-    }
-
-    // Displays image on the imageview and saves ID.
-    private void addImg(Uri uri) {
-        imageView.setImageURI(uri);
-        currentImage = uri;
-    }
-
-    // Gets image from imageview and clears the imageview.
-    private Uri acquirePicture() {
-        Uri out = currentImage;
-        currentImage = null;
-        imageView.setImageResource(0);
-        return out;
-    }
-
-    // Gets text from edit text view and clears.
-    private String acquireText() {
-        String out = String.valueOf(inputEditText.getText());
-        inputEditText.setText("");
-        return out;
     }
 
     //method for creating intent and starting new activity
@@ -140,8 +98,5 @@ public class NewEntryActivity extends AppCompatActivity {
                 break;
             }
         startActivity(intent);
-    }
-    public ActivityResultLauncher<Intent> getLauncher() {
-        return launcher;
     }
 }

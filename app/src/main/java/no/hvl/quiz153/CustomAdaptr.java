@@ -28,7 +28,6 @@ public class CustomAdaptr extends BaseAdapter {
             entryList.clear();
             entryList.addAll(quizEntries);
             notifyDataSetChanged();
-
         });
         this.inflater = LayoutInflater.from(context);
         this.mViewModel = mvm;
@@ -73,7 +72,6 @@ public class CustomAdaptr extends BaseAdapter {
 
             } catch (Exception e) {
                 holder.imageView.setImageResource(R.drawable.ic_launcher_background);
-
             }
         } else {
             holder.imageView.setImageResource(R.drawable.ic_launcher_background);
