@@ -2,6 +2,7 @@ package no.hvl.quiz153;
 
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.notNullValue;
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThat;
 
 import android.widget.Button;
@@ -58,11 +59,12 @@ public class QuizActivityTest {
             @Override
             public void run() {
                 finalCorrectButton.performClick();
+                Espresso.onView(ViewMatchers.withId(R.id.text_score))
+                        .check(ViewAssertions.matches(ViewMatchers.withText(expectedScore + " / " + expectedTotal)));
+
             }
         });
 
-        Espresso.onView(ViewMatchers.withId(R.id.text_score))
-                .check(ViewAssertions.matches(ViewMatchers.withText(expectedScore + " / " + (expectedTotal))));
 
     }
 
@@ -71,30 +73,30 @@ public class QuizActivityTest {
         int initialScore = quizActivity.score;
         int initalTotal = quizActivity.total;
         int expectedTotal = initalTotal + 1;
-        String correctTxt = quizActivity.curr_answer.getText();
+        String notCorrectTxt = quizActivity.curr_answer.getText();
 
         List<Button> btnList = quizActivity.button_list;
-        Button correctButton = null;
+        Button notCorrectButton = null;
 
         for (Button button : btnList) {
-            if (!button.getText().toString().contains(correctTxt)) {
-                correctButton = button;
+            if (!button.getText().toString().contains(notCorrectTxt)) {
+                notCorrectButton = button;
                 break;
             }
         }
 
-        assertThat(correctButton, is(notNullValue()));
+        assertThat(notCorrectButton, is(notNullValue()));
 
-        Button finalCorrectButton = correctButton;
+        Button finalNotCorrectButton = notCorrectButton;
         quizActivity.runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                finalCorrectButton.performClick();
+                finalNotCorrectButton.performClick();
+                Espresso.onView(ViewMatchers.withId(R.id.text_score))
+                        .check(ViewAssertions.matches(ViewMatchers.withText(initialScore + " / " + expectedTotal)));
             }
         });
 
-        Espresso.onView(ViewMatchers.withId(R.id.text_score))
-                .check(ViewAssertions.matches(ViewMatchers.withText(initialScore + " / " + (expectedTotal))));
 
     }
 }
